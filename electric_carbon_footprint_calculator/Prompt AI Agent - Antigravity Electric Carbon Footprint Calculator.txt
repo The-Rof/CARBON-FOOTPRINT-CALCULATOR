@@ -1,0 +1,21 @@
+Prompt AI Agent - Antigravity: Electric Carbon Footprint Calculator
+
+#Role
+
+#tasks:
+- Copy the proyect: carbon_footprint_calculator from my local file: 
+C:\Users\Usuario\.gemini\antigravity\scratch\carbon_footprint_calculator
+and create a new proyect named: electric_carbon_footprint_calculator in the same file: \scratch
+
+- Modify them code for the new app with a beautiful interface glass style like the image:
+
+
+- Use theese image as a background image:
+
+- The app must be responsive
+
+- The background of Greeting page has an animation of a ver smooth zoom in/zoom out
+
+- If 
+
+  

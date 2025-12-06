@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Huella de Carbono Colombia</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Bebas+Neue&family=Roboto:wght@300;400;500;700;900&family=Science+Gothic:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Background Animation -->
+    <div class="background-animated">
+        <div class="neon-orb orb-1"></div>
+        <div class="neon-orb orb-2"></div>
+        <div class="neon-orb orb-3"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+
+    <main class="container">
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <div class="welcome-content glass-card">
+
+                <h1 class="neon-text">BIENVENIDOS</h1>
+
+                <div class="input-group">
+                    <label for="userName" style="display:none;">Nombre</label>
+                    <input type="text" id="userName" placeholder="Ingresa tu nombre" autocomplete="name">
+                </div>
+
+                <div class="welcome-message">
+                    <p>DESCUBRE EL IMPACTO AMBIENTAL DE TU TRANSPORTE Y CONOCE CÓMO LOS VEHÍCULOS ELÉCTRICOS PUEDEN
+                        TRANSFORMAR TU HUELLA DE CARBONO</p>
+                </div>
+
+                <button class="btn-start" onclick="startQuiz()">
+                    COMENZAR
+                </button>
+
+                <!-- Social Buttons -->
+                <div class="social-buttons">
+                    <a href="https://www.instagram.com/nasstarr.rof/" class="social-btn" aria-label="Instagram">
+                        <img src="./Logos RS/home_instagram_logo.png" alt="Instagram Logo"
+                            style="width: 20px; max-width: 25px; align-items: center;"></a>
+                    <a href="https://www.facebook.com/NastarSebastian/" class="social-btn" aria-label="Facebook"><img
+                            src="./Logos RS/Facebook.png" alt="Facebook Logo"
+                            style="width: 20px; max-width: 25px; align-items: center;"></a>
+                    <a href="https://x.com/Nastar_Rof" class="social-btn" aria-label="X (Twitter)"><img
+                            src="./Logos RS/X.png" alt="X Logo"
+                            style="width: 20px; max-width: 25px; align-items: center;"></a>
+                    <a href="https://www.youtube.com/@sebastian-nastar" class="social-btn" aria-label="YouTube"><img
+                            src="./Logos RS/youtube-white.png" alt="YouTube Logo"
+                            style="width: 20px; max-width: 25px; align-items: center;"></a>
+                    <a href="https://github.com/The-Rof" class="social-btn" aria-label="GitHub"><img
+                            src="./Logos RS/github.png" alt="Github Logo"
+                            style="width: 20px; max-width: 25px; align-items: center;"></a>
+                    <a href="https://www.linkedin.com/in/sebastian-nastar-ia/" class="social-btn"
+                        aria-label="LinkedIn"><img src="./Logos RS/linkedin.png" alt="LinkedIn Logo"
+                            style="width: 20px; max-width: 25px; align-items: center;"></a>
+                </div>
+            </div>
+        </div>
+
+        <header class="app-header" id="appHeader">
+            <h1>Hola, <span class="user-name-display" id="userNameDisplay">Amigo</span> 👋</h1>
+            <p>Calculemos tu Huella de Carbono mensual</p>
+        </header>
+
+        <form id="carbonQuiz" class="quiz-container glass-card">
+            <!-- Progress Bar -->
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <!-- Step 1: Carro/SUV -->
+            <div class="quiz-step active" data-step="1">
+                <div class="step-header">
+                    <div class="icon-container">🚗</div>
+                    <h2>Carro o SUV</h2>
+                </div>
+                <div class="input-group">
+                    <label for="horas_carro">¿Cuántas horas al día lo usas?</label>
+                    <input type="number" id="horas_carro" placeholder="Ej: 1.5" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>¿Cuántos días a la semana?</label>
+                    <div class="radio-options">
+                        <label class="radio-card"><input type="radio" name="dias_carro" value="7"><span>7
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_carro" value="6"><span>5-7
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_carro" value="4"><span>3-5
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_carro" value="2"><span>
+                                < 3 días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_carro" value="0" checked><span>No
+                                uso</span></label>
+                    </div>
+                </div>
+                <button type="button" class="btn-next" onclick="nextStep(2)">Siguiente ➝</button>
+            </div>
+
+            <!-- Step 2: Bus -->
+            <div class="quiz-step" data-step="2">
+                <div class="step-header">
+                    <div class="icon-container">🚌</div>
+                    <h2>Bus Público</h2>
+                </div>
+                <div class="input-group">
+                    <label for="horas_bus">¿Cuántas horas al día viajas?</label>
+                    <input type="number" id="horas_bus" placeholder="Ej: 2" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>¿Cuántos días a la semana?</label>
+                    <div class="radio-options">
+                        <label class="radio-card"><input type="radio" name="dias_bus" value="7"><span>7
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_bus" value="6"><span>5-7
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_bus" value="4"><span>3-5
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_bus" value="2"><span>
+                                < 3 días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_bus" value="0" checked><span>No
+                                uso</span></label>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button type="button" class="btn-prev" onclick="prevStep(1)">← Atrás</button>
+                    <button type="button" class="btn-next" onclick="nextStep(3)">Siguiente ➝</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Moto -->
+            <div class="quiz-step" data-step="3">
+                <div class="step-header">
+                    <div class="icon-container">🏍️</div>
+                    <h2>Moto</h2>
+                </div>
+                <div class="input-group">
+                    <label for="horas_moto">¿Cuántas horas al día la usas?</label>
+                    <input type="number" id="horas_moto" placeholder="Ej: 0.5" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>¿Cuántos días a la semana?</label>
+                    <div class="radio-options">
+                        <label class="radio-card"><input type="radio" name="dias_moto" value="7"><span>7
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_moto" value="6"><span>5-7
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_moto" value="4"><span>3-5
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_moto" value="2"><span>
+                                < 3 días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_moto" value="0" checked><span>No
+                                uso</span></label>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button type="button" class="btn-prev" onclick="prevStep(2)">← Atrás</button>
+                    <button type="button" class="btn-next" onclick="nextStep(4)">Siguiente ➝</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Camioneta -->
+            <div class="quiz-step" data-step="4">
+                <div class="step-header">
+                    <div class="icon-container">🛻</div>
+                    <h2>Camioneta / Pickup</h2>
+                </div>
+                <div class="input-group">
+                    <label for="horas_camioneta">¿Cuántas horas al día la usas?</label>
+                    <input type="number" id="horas_camioneta" placeholder="Ej: 1" min="0" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>¿Cuántos días a la semana?</label>
+                    <div class="radio-options">
+                        <label class="radio-card"><input type="radio" name="dias_camioneta" value="7"><span>7
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_camioneta" value="6"><span>5-7
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_camioneta" value="4"><span>3-5
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_camioneta" value="2"><span>
+                                < 3 días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_camioneta" value="0" checked><span>No
+                                uso</span></label>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button type="button" class="btn-prev" onclick="prevStep(3)">← Atrás</button>
+                    <button type="button" class="btn-next" onclick="nextStep(5)">Siguiente ➝</button>
+                </div>
+            </div>
+
+            <!-- Step 5: Avión -->
+            <div class="quiz-step" data-step="5">
+                <div class="step-header">
+                    <div class="icon-container">✈️</div>
+                    <h2>Avión</h2>
+                </div>
+                <div class="input-group">
+                    <label for="horas_avion">¿Cuántas <strong>horas de vuelo</strong> al mes?</label>
+                    <input type="number" id="horas_avion" placeholder="Ej: 5" min="0" step="0.1">
+                    <p class="Aclaracion" style="padding: 15px 0px 0px; font-size: small; text-align: end;">*Incluye
+                        vuelos nacionales e internacionales</p>
+                </div>
+                <div class="nav-buttons">
+                    <button type="button" class="btn-prev" onclick="prevStep(4)">← Atrás</button>
+                    <button type="button" class="btn-next" onclick="nextStep(6)">Siguiente ➝</button>
+                </div>
+            </div>
+
+            <!-- Step 6: Lancha/Barco -->
+            <div class="quiz-step" data-step="6">
+                <div class="step-header">
+                    <div class="icon-container">🚤</div>
+                    <h2>Lancha / Barco</h2>
+                </div>
+                <div class="input-group">
+                    <label for="horas_lancha">¿Cuántas <strong>horas de uso</strong> al mes?</label>
+                    <input type="number" id="horas_lancha" placeholder="Ej: 2" min="0" step="0.1">
+                </div>
+                <div class="nav-buttons">
+                    <button type="button" class="btn-prev" onclick="prevStep(5)">← Atrás</button>
+                    <button type="button" class="btn-next" onclick="nextStep(7)">Siguiente ➝</button>
+                </div>
+            </div>
+
+            <!-- Step 7: Cero Emisiones -->
+            <div class="quiz-step" data-step="7">
+                <div class="step-header">
+                    <div class="icon-container">🚲</div>
+                    <h2>Transporte Limpio</h2>
+                </div>
+                <div class="input-group">
+                    <label>¿Días a la semana en Bici/Caminando?</label>
+                    <div class="radio-options">
+                        <label class="radio-card"><input type="radio" name="dias_cero" value="7"><span>7
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_cero" value="6"><span>5-7
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_cero" value="4"><span>3-5
+                                días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_cero" value="2"><span>
+                                < 3 días</span></label>
+                        <label class="radio-card"><input type="radio" name="dias_cero" value="0" checked><span>No
+                                uso</span></label>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button type="button" class="btn-prev" onclick="prevStep(6)">← Atrás</button>
+                    <button type="button" class="btn-finish" onclick="calcularHuellaMensual()">Calcular Resultados
+                        ✨</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Dashboard de Resultados -->
+        <div id="resultado" class="dashboard glass-card hidden">
+            <div class="dashboard-header">
+                <h2>Tu Huella Mensual</h2>
+                <button onclick="resetQuiz()" class="btn-reset">🔄 Recalcular</button>
+            </div>
+
+            <div class="traffic-light-container">
+                <div class="traffic-light">
+                    <div class="light red" id="light-red"></div>
+                    <div class="light yellow" id="light-yellow"></div>
+                    <div class="light green" id="light-green"></div>
+                    <div class="light blue" id="light-blue"></div>
+                </div>
+                <div class="score-display">
+                    <span id="score-value">0</span>
+                    <small>kg CO₂/mes</small>
+                </div>
+            </div>
+
+            <div class="classification-banner" id="classification-banner">
+                <!-- Se llena con JS -->
+            </div>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>🌳 Árboles Necesarios</h3>
+                    <div class="tree-visual" id="tree-visual"></div>
+                    <p id="trees-text">0</p>
+                    <p class="caption_trees" style="font-size: large; color: #00ff88; font-weight: 500;">Para compensar
+                        tu huella anual</p>
+                </div>
+                <div class="result-card">
+                    <h3>📊 Desglose</h3>
+                    <ul class="breakdown-list" id="breakdown-list">
+                        <!-- Se llena con JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Map Visualization -->
+            <div class="map-section">
+                <h3>🗺️ Tu Impacto en Colombia</h3>
+                <div id="impactMap" class="impact-map"></div>
+                <p class="map-description">El mapa muestra tu ubicación y el impacto ambiental estimado</p>
+            </div>
+
+            <div class="results-grid">
+                <div class="result-card highlight">
+                    <h3>⚡ Con Vehículo Eléctrico</h3>
+                    <p id="ev-savings" style="font-size: xxx-large; color: #00ffab !important; font-weight: 600;">0</p>
+                    <small>kg CO₂/mes (Ahorro estimado)</small>
+                </div>
+
+                <div class="social-buttons-results">
+                    <h3 style="font-size: 1.9rem;text-align: center;padding: 0px 0px 0px;font-weight: 700;">Síguenos en
+                        Redes Sociales</h3>
+                    <a href="https://www.instagram.com/nasstarr.rof/" class="social-btn" aria-label="Instagram">
+                        <img src="./Logos RS/home_instagram_logo.png" alt="Instagram Logo"
+                            style="width: 20px; max-width: 25px; align-items: center;"></a>
+                    <a href="https://www.facebook.com/NastarSebastian/" class="social-btn" aria-label="Facebook"><img
+                            src="./Logos RS/Facebook.png" alt="Facebook Logo"
+                            style="width: 20px; max-width: 25px; align-items: center;"></a>
+                    <a href="https://x.com/Nastar_Rof" class="social-btn" aria-label="X (Twitter)"><img
+                            src="./Logos RS/X.png" alt="X Logo"
+                            style="width: 20px; max-width: 25px; align-items: center;"></a>
+                    <a href="https://www.youtube.com/@sebastian-nastar" class="social-btn" aria-label="YouTube"><img
+                            src="./Logos RS/youtube-white.png" alt="YouTube Logo"
+                            style="width: 20px; max-width: 25px; align-items: center;"></a>
+                    <a href="https://github.com/The-Rof" class="social-btn" aria-label="GitHub"><img
+                            src="./Logos RS/github.png" alt="Github Logo"
+                            style="width: 20px; max-width: 25px; align-items: center;"></a>
+                    <a href="https://www.linkedin.com/in/sebastian-nastar-ia/" class="social-btn"
+                        aria-label="LinkedIn"><img src="./Logos RS/linkedin.png" alt="LinkedIn Logo"
+                            style="width: 20px; max-width: 25px; align-items: center;"></a>
+                </div>
+            </div>
+
+            <div class="ev-promo glass-card">
+                <h3 style="font-size: 2.5rem; text-align: center; padding: 30px 0px 0px; font-weight: 700;">🚀 Pásate a
+                    la Movilidad Eléctrica</h3>
+                <p style="padding: 20px 0px 25px; text-align: center;">Colombia avanza hacia un futuro sostenible. ¡Sé
+                    parte
+                    del cambio!</p>
+                <ul class="benefits-list"
+                    style="display: flex; flex-wrap: wrap; align-content: center; justify-content: center; flex-direction: column; align-items: flex-start; font-weight: 500; text-shadow: -4px 6px 12px black;">
+                    <li>💰 Ahorro en combustible y mantenimiento</li>
+                    <li>🌿 Cero emisiones directas</li>
+                    <li>🔇 Conducción silenciosa y suave</li>
+                    <li>🛑 Exención de Pico y Placa (en muchas ciudades)</li>
+                </ul>
+                <button class="btn-learn-more"
+                    style=" margin: 40px 0px; width: -webkit-fill-available; text-align: center; font-weight: 600; background: black; color: #00ff88; filter: drop-shadow(2px 4px 6px black);">Conocer
+                    más sobre EVs en Colombia</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Leaflet JS for Map -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>

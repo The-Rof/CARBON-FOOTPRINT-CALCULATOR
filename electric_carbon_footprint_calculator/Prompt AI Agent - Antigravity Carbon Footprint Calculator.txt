@@ -1,0 +1,530 @@
+Prompt AI Agent - Antigravity: Carbon Footprint Calculator
+
+#Role
+Create a Carbon Foodprint  Calculator about transportation use in Colombia or aprox to the place.
+
+#Context
+
+The emitions are oil transport (gasoline and fossile fuel).
+
+#Tasks:
+## Searching
+- I want to kwon how many emitions produce a person using this 5 transports: car, bus, air plane, motorbike and barge
+- Search a deep information about consumption Km/Gallon in a SUV vehicle
+- Find information on the fuel consumption of a pickup truck in gallons per hour.
+- Find information on the fuel consumption of a bus in gallons per hour.
+- Find information on the fuel consumption of an airplane in gallons per hour.
+- Find information on the fuel consumption of a boat in gallons per hour.
+
+##Design 
+- Make a carbon traffic ligths of four colors:
+  One for very contaminated, other for middle contamination, other for low contamination and the last one for zero Emitions.
+- Create the code in HTML, CSS, JavaScript, Python or wherever lenguage to create the best UI calculator. I created a code initial, but a need the next next level: a product that everybody feel the wow effect.
+
+### Code initial:
+(<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Huella de Carbono (Quiz)</title>
+    <style>
+        /* Base de la aplicación */
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f9;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Alineación superior para mejor visualización */
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 750px;
+            margin: 20px 0;
+            background: white;
+            padding: 30px;
+            border-radius: 12px; /* Esquinas redondeadas */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #1a202c;
+            text-align: center;
+            font-weight: 700;
+        }
+        
+        /* Estilos del grupo de preguntas */
+        .question-group {
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .question-group:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .question-group h3 {
+            margin-top: 0;
+            padding-bottom: 10px;
+            color: #3b82f6; /* Azul primario */
+            border-bottom: 2px solid #3b82f6;
+            font-size: 1.25rem;
+        }
+        label {
+            display: block;
+            margin: 15px 0 8px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        /* Estilos de inputs y selects */
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        input[type="number"]:focus, select:focus {
+            border-color: #3b82f6;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+        
+        /* Estilos de Radio Buttons (Opciones de Días) */
+        .radio-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .radio-options label {
+            display: inline-flex;
+            align-items: center;
+            margin: 0;
+            padding: 8px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 9999px; /* Píldora */
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+            font-weight: 400;
+        }
+        .radio-options label:hover {
+            background-color: #edf2f7;
+        }
+        .radio-options input[type="radio"] {
+            margin-right: 8px;
+            width: auto; /* Anula el 100% */
+        }
+        .radio-options input[type="radio"]:checked + span {
+            font-weight: bold;
+            color: green;
+        }
+        
+        /* Estilos del botón de cálculo */
+        button {
+            background-color: #059669; /* Verde esmeralda */
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 25px;
+            width: 100%;
+            font-size: 1.125rem;
+            font-weight: 700;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        button:hover {
+            background-color: #047857;
+        }
+        button:active {
+            transform: scale(0.99);
+        }
+        
+        /* Estilos del Resultado */
+        #resultado {
+            margin-top: 35px;
+            padding: 25px;
+            border-radius: 10px;
+            background-color: #e6fffa; /* Fondo suave para el resultado */
+            border: 2px solid #38b2ac;
+            text-align: center;
+        }
+        #resultado h2 {
+            margin-bottom: 5px;
+            font-size: 1.5rem;
+        }
+        #resultado h1 {
+            font-size: 2.5rem;
+            margin: 10px 0;
+        }
+        #resultado h4 {
+            margin-top: 20px;
+            color: #38b2ac;
+            font-weight: 600;
+            border-bottom: 1px dashed #a0aec0;
+            padding-bottom: 5px;
+        }
+        #resultado ul {
+            list-style: none;
+            padding: 0;
+        }
+        #resultado li {
+            margin: 5px 0;
+            padding: 5px;
+            background: #f7fafc;
+            border-radius: 4px;
+            color: #4a5568;
+        }
+        .nota {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Estilos del Semáforo (Visual y Texto) */
+        .semaforo {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 10px;
+            vertical-align: middle;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Definición de colores del Semáforo */
+        .color-azul { background-color: #3b82f6; } /* Cero Emisiones (Azul Claro) */
+        .color-verde { background-color: #4CAF50; } /* No Muy Contaminante */
+        .color-amarillo { background-color: #ffc107; } /* Contaminante Medio */
+        .color-rojo-oscuro { background-color: #991b1b; } /* Muy Contaminante */
+        
+        .texto-azul { color: #3b82f6; }
+        .texto-verde { color: #4CAF50; }
+        .texto-amarillo { color: #ffc107; }
+        .texto-rojo-oscuro { color: #991b1b; }
+
+        /* Media Queries para Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px 0;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            .question-group h3 {
+                font-size: 1.1rem;
+            }
+            .radio-options {
+                flex-direction: column;
+            }
+            .radio-options label {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Calculadora de Huella de Carbono Personal</h1>
+    <h2>Transporte por Combustión (Emisión Mensual) </h2>
+
+    <form id="carbonQuiz">
+        <!-- Pregunta 1: Carro/SUV -->
+        <div class="question-group">
+            <h3>1. Carro o SUV (Gasolina)</h3>
+            <label>¿Cuántas **horas al día** (en promedio) usa su Carro/SUV cuando lo usa?</label>
+            <input type="number" id="horas_carro" value="0" min="0" step="0.1">
+
+            <label>¿Cuántos **días a la semana** lo usa?</label>
+            <div class="radio-options">
+                <label><input type="radio" name="dias_carro" value="7"> <span>7 días</span></label>
+                <label><input type="radio" name="dias_carro" value="6"> <span>5-7 días</span></label>
+                <label><input type="radio" name="dias_carro" value="4"> <span>3-5 días</span></label>
+                <label><input type="radio" name="dias_carro" value="2"> <span>menos de 3 días</span></label>
+                <label><input type="radio" name="dias_carro" value="0" checked> <span>No lo uso</span></label>
+            </div>
+        </div>
+
+        <!-- Pregunta 2: Bus -->
+        <div class="question-group">
+            <h3>2. Bus de Transporte Público (Diésel)</h3>
+            <label>¿Cuántas **horas al día** (en promedio) viaja en Bus?</label>
+            <input type="number" id="horas_bus" value="0" min="0" step="0.1">
+
+            <label>¿Cuántos **días a la semana** lo usa?</label>
+            <div class="radio-options">
+                <label><input type="radio" name="dias_bus" value="7"> <span>7 días</span></label>
+                <label><input type="radio" name="dias_bus" value="6"> <span>5-7 días</span></label>
+                <label><input type="radio" name="dias_bus" value="4"> <span>3-5 días</span></label>
+                <label><input type="radio" name="dias_bus" value="2"> <span>menos de 3 días</span></label>
+                <label><input type="radio" name="dias_bus" value="0" checked> <span>No lo uso</span></label>
+            </div>
+        </div>
+
+        <!-- Pregunta 3: Moto -->
+        <div class="question-group">
+            <h3>3. Moto (Gasolina)</h3>
+            <label>¿Cuántas **horas al día** (en promedio) usa su Moto?</label>
+            <input type="number" id="horas_moto" value="0" min="0" step="0.1">
+
+            <label>¿Cuántos **días a la semana** la usa?</label>
+            <div class="radio-options">
+                <label><input type="radio" name="dias_moto" value="7"> <span>7 días</span></label>
+                <label><input type="radio" name="dias_moto" value="6"> <span>5-7 días</span></label>
+                <label><input type="radio" name="dias_moto" value="4"> <span>3-5 días</span></label>
+                <label><input type="radio" name="dias_moto" value="2"> <span>menos de 3 días</span></label>
+                <label><input type="radio" name="dias_moto" value="0" checked> <span>No lo uso</span></label>
+            </div>
+        </div>
+        
+        <!-- Pregunta 4: Camioneta -->
+        <div class="question-group">
+            <h3>4. Camioneta (Diésel/Gasolina)</h3>
+            <label>¿Cuántas **horas al día** (en promedio) usa su Camioneta?</label>
+            <input type="number" id="horas_camioneta" value="0" min="0" step="0.1">
+
+            <label>¿Cuántos **días a la semana** la usa?</label>
+            <div class="radio-options">
+                <label><input type="radio" name="dias_camioneta" value="7"> <span>7 días</span></label>
+                <label><input type="radio" name="dias_camioneta" value="6"> <span>5-7 días</span></label>
+                <label><input type="radio" name="dias_camioneta" value="4"> <span>3-5 días</span></label>
+                <label><input type="radio" name="dias_camioneta" value="2"> <span>menos de 3 días</span></label>
+                <label><input type="radio" name="dias_camioneta" value="0" checked> <span>No lo uso</span></label>
+            </div>
+        </div>
+
+        <!-- Pregunta 5: Avión (Vuelos) -->
+        <div class="question-group">
+            <h3>5. Avión (Vuelos Comerciales)</h3>
+            <label>¿Cuántas **horas de vuelo** (en total) toma al mes?</label>
+            <input type="number" id="horas_avion" value="0" min="0" step="0.1">
+        </div>
+
+        <!-- Pregunta 6: Lancha -->
+        <div class="question-group">
+            <h3>6. Lancha (Diésel/Gasolina)</h3>
+            <label>¿Cuántas **horas de uso** (en total) usa la Lancha al mes?</label>
+            <input type="number" id="horas_lancha" value="0" min="0" step="0.1">
+        </div>
+
+        <!-- Pregunta 7: Cero Emisiones -->
+        <div class="question-group">
+            <h3>7. Cero Emisiones (Bicicleta/Caminata/Eléctrico)</h3>
+            <label>¿Cuántos **días a la semana** usa transporte de cero emisiones (como bicicleta o caminata)?</label>
+            <div class="radio-options">
+                <label><input type="radio" name="dias_cero" value="7"> <span>7 días</span></label>
+                <label><input type="radio" name="dias_cero" value="6"> <span>5-7 días</span></label>
+                <label><input type="radio" name="dias_cero" value="4"> <span>3-5 días</span></label>
+                <label><input type="radio" name="dias_cero" value="2"> <span>menos de 3 días</span></label>
+                <label><input type="radio" name="dias_cero" value="0" checked> <span>No lo uso</span></label>
+            </div>
+        </div>
+
+        <button type="button" onclick="calcularHuellaMensual()">Calcular Huella Mensual</button>
+    </form>
+
+    <div id="resultado">
+        <!-- El resultado se mostrará aquí -->
+    </div>
+</div>
+
+<script>
+    // Parámetros de la Calculadora (Valores basados en promedios de consumo y factores de emisión)
+    const CONSUMPTION_RATES = {
+        carro: 2.0,       // Gal/h (Gasolina - SUV promedio)
+        bus: 0.25,        // Gal/h (Diésel - 1/20 de la emisión total del bus, asumiendo 20 pasajeros)
+        moto: 0.75,       // Gal/h (Gasolina - Moto promedio)
+        camioneta: 3.0,   // Gal/h (Diésel/Gasolina - Camioneta promedio)
+        lancha: 4.9,      // Gal/h (Diésel - Lancha 100 CV)
+        avion: 12.0       // Gal/h (Turbosina/Diésel - 1/300 de la emisión total del avión, asumiendo 300 pasajeros)
+    };
+
+    const EMISSION_FACTORS = {
+        carro: 8.89,      // Kg CO2/Gal (Gasolina)
+        bus: 10.18,       // Kg CO2/Gal (Diésel)
+        moto: 8.89,
+        camioneta: 10.18,
+        lancha: 10.18,
+        avion: 10.18      // Usamos Diésel como proxy para Turbosina
+    };
+
+    // Umbrales para la Huella de Carbono MENSUAL (Kg CO2/Mes)
+    const UMBRAL_AZUL = 1;        // Prácticamente cero (solo para distinción visual)
+    const UMBRAL_VERDE = 400;     // Bajo: 1 - 400 kg CO2/mes
+    const UMBRAL_AMARILLO = 1500; // Medio: 400 - 1500 kg CO2/mes
+    // Alto: > 1500 kg CO2/mes
+
+    /**
+     * Obtiene el valor numérico (días a la semana) seleccionado del radio button.
+     * @param {string} name - Nombre del grupo de radio buttons (e.g., 'dias_carro').
+     * @returns {number} El número de días a la semana (0, 2, 4, 6, o 7).
+     */
+    function getRadioValue(name) {
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        // Usamos Math.max para asegurar que si no se selecciona nada (o falla), sea 0.
+        return selected ? Math.max(0, parseInt(selected.value)) : 0;
+    }
+
+    /**
+     * Calcula la huella de carbono mensual y la clasifica con el semáforo.
+     */
+    function calcularHuellaMensual() {
+        let huella_co2_total = 0;
+        const calculos_individuales = [];
+
+        // Definición de vehículos con inputs de horas diarias y radio buttons de días
+        const vehiculos_diarios = [
+            { tipo: 'carro', label: 'Carro/SUV' },
+            { tipo: 'bus', label: 'Bus' },
+            { tipo: 'moto', label: 'Moto' },
+            { tipo: 'camioneta', label: 'Camioneta' }
+        ];
+
+        // 1. Cálculo de Vehículos de Uso Diario/Semanal
+        vehiculos_diarios.forEach(({ tipo, label }) => {
+            const horas_dia = parseFloat(document.getElementById(`horas_${tipo}`).value) || 0;
+            const dias_semana = getRadioValue(`dias_${tipo}`);
+
+            if (horas_dia > 0 && dias_semana > 0) {
+                const consumo_h = CONSUMPTION_RATES[tipo];
+                const factor_co2 = EMISSION_FACTORS[tipo];
+
+                // Consumo Semanal (Gal) = Consumo_h * Horas_dia * Días_semana
+                const consumo_semanal = consumo_h * horas_dia * dias_semana;
+
+                // Emisión Mensual (Kg CO2/Mes) = Consumo_semanal * 4 semanas/mes * Factor_CO2
+                const emision_mensual = consumo_semanal * 4 * factor_co2;
+                
+                huella_co2_total += emision_mensual;
+                calculos_individuales.push(`${label}: ${emision_mensual.toFixed(2)} kg CO₂`);
+            }
+        });
+
+        // 2. Cálculo de Avión (Uso Mensual Directo)
+        // Se asume que las 'horas_avion' son totales en el mes.
+        const horas_avion = parseFloat(document.getElementById('horas_avion').value) || 0;
+        if (horas_avion > 0) {
+            const consumo_h = CONSUMPTION_RATES.avion;
+            const factor_co2 = EMISSION_FACTORS.avion;
+
+            // Emisión Mensual (Kg CO2/Mes) = Consumo_h * Horas_mes * Factor_CO2
+            const emision_mensual_avion = horas_avion * consumo_h * factor_co2;
+            huella_co2_total += emision_mensual_avion;
+            calculos_individuales.push(`Avión: ${emision_mensual_avion.toFixed(2)} kg CO₂`);
+        }
+        
+        // 3. Cálculo de Lancha (Uso Mensual Directo)
+        // Se asume que las 'horas_lancha' son totales en el mes.
+        const horas_lancha = parseFloat(document.getElementById('horas_lancha').value) || 0;
+        if (horas_lancha > 0) {
+            const consumo_h = CONSUMPTION_RATES.lancha;
+            const factor_co2 = EMISSION_FACTORS.lancha;
+
+            // Emisión Mensual (Kg CO2/Mes) = Consumo_h * Horas_mes * Factor_CO2
+            const emision_mensual_lancha = horas_lancha * consumo_h * factor_co2;
+            huella_co2_total += emision_mensual_lancha;
+            calculos_individuales.push(`Lancha: ${emision_mensual_lancha.toFixed(2)} kg CO₂`);
+        }
+
+        // 4. Clasificación del Semáforo
+        let colorSemaforo, clasificacion, claseTexto;
+        const dias_cero = getRadioValue('dias_cero');
+
+        if (huella_co2_total < UMBRAL_AZUL) { // Casi Cero o Cero
+            colorSemaforo = 'color-azul';
+            clasificacion = 'CERO/BAJAS EMISIONES';
+            claseTexto = 'texto-azul';
+        } else if (huella_co2_total < UMBRAL_VERDE) {
+            colorSemaforo = 'color-verde';
+            clasificacion = 'HUELLA BAJA (No muy contaminante)';
+            claseTexto = 'texto-verde';
+        } else if (huella_co2_total >= UMBRAL_VERDE && huella_co2_total <= UMBRAL_AMARILLO) {
+            colorSemaforo = 'color-amarillo';
+            clasificacion = 'HUELLA MEDIA (Contaminante Medio)';
+            claseTexto = 'texto-amarillo';
+        } else {
+            colorSemaforo = 'color-rojo-oscuro';
+            clasificacion = 'HUELLA ALTA (Muy Contaminante)';
+            claseTexto = 'texto-rojo-oscuro';
+        }
+
+        // 5. Mostrar Resultados
+        const resultadoDiv = document.getElementById('resultado');
+        const detalles = calculos_individuales.length > 0 ? `
+            <h4>Desglose Mensual de Emisiones por Transporte:</h4>
+            <ul>
+                ${calculos_individuales.map(item => `<li>${item}</li>`).join('')}
+            </ul>
+        ` : 'No se registraron emisiones de transporte por combustión, ¡Excelente!';
+
+        resultadoDiv.innerHTML = `
+            <h2>Resultado de su Huella Mensual</h2>
+            <p>Uso de Cero Emisiones (Bici/Caminata/Eléctrico): <strong>${dias_cero}</strong> días a la semana.</p>
+            <hr>
+            <h3>Huella de CO₂ Total Estimada:</h3>
+            <h1><strong>${huella_co2_total.toFixed(2)} kg CO₂/mes</strong></h1>
+            
+            <p>Clasificación del Semáforo:
+                <span class="${claseTexto}"><strong>${clasificacion}</strong></span>
+                <span class="semaforo ${colorSemaforo}"></span>
+            </p>
+            ${detalles}
+            <p class="nota">⚠️ *Nota: Los cálculos de Bus y Avión asumen que la emisión se divide entre un número promedio de pasajeros. La calificación del semáforo se basa en umbrales de consumo típicos para un solo individuo y son estimados.</p>
+        `;
+    }
+
+    // Inicializar el resultado al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('resultado').innerHTML = '<h2>¡Listo para calcular!</h2><p>Por favor, ingrese sus hábitos de transporte y presione "Calcular Huella Mensual".</p>';
+    });
+</script>
+
+</body>
+</html>)
+
+[Define your styles]
+- The UI/UX should be an elegant glass morphism
+- Change fonts family for a minimal, smooth and Pro
+- Generate a beautiful dark mode bottom for change de UI and don't burn my eyes
+- Generate a some animation in the background
+- Add a neon effects
+- Remember: do all in Colobian spanish and this is a app for promove the electric vehicule as a mobility alternative 
+
+#Examples:
+We need to calculate the average emissions per person. Therefore, I want to create a quiz interface that asks how many times a week you use this mode of transportation. For example: How many times a week do you use the bus?
+
+a. 7 days
+b. 5-7 days
+c. 3-5 days
+d. Less than 3 days
+e. I don't use it
+
+#Indications
+- This process should be repeated for each vehicle. Once you have this information, you should calculate the average consumption for each day of use and add up the consumption for all the modes of transportation used. This will tell you the weekly consumption.
+
+- Once you have this result, multiply it by 4 to get the monthly consumption and display the result—the traffic light indicating the amount of CO2 emitted per month.
+
+- When the result of a calculations is ready, Create a beatiful dasboard with the results. The user should understand them impact
+- Explain how many trees must plant for mitigate them impact. 
+
+
+#Commentary/Notes
+This is my firts "app" and I wish the best foodprint carbon calculator in the world for my people and planet. 
+
+Help me please!
+
+And if you need any other information, ask me; otherwise, proceed.
+
